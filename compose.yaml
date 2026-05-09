@@ -1,0 +1,22 @@
+services:
+  ms-disciplina:
+    build: ./ms-disciplina
+    ports:
+      - "8081:8081"
+    networks:
+      - rede-cos
+
+  ms-tarefa:
+    build: ./ms-tarefa
+    ports:
+      - "8082:8082"
+    depends_on:
+      - ms-disciplina
+    networks:
+      - rede-cos
+    environment:
+      - URL_DISCIPLINA=http://ms-disciplina:8081/disciplinas/
+
+networks:
+  rede-cos:
+    driver: bridge
